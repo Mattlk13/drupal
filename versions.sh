@@ -111,13 +111,19 @@ for version in "${versions[@]}"; do
 			phpVersions: (
 				# https://www.drupal.org/docs/system-requirements/php-requirements
 				[
+					# Drupal 11.3+ supports PHP 8.5
+					if env.version | IN("10.5", "10.6", "11.2") then empty else
+						"8.5"
+					end,
 					# Drupal 11.1+ and 10.4+ support PHP 8.4
 					"8.4",
-					# https://www.drupal.org/project/drupal/releases/10.2.0-rc1#php-deps
-					# Drupal supports PHP 8.3 and recommends at least PHP 8.2.
-					"8.3",
-					# https://www.drupal.org/docs/system-requirements/php-requirements
-					empty
+					# Drupal 11.3+ and 10.6+ recommend PHP 8.4; keep 8.3 for 'existing' builds
+					# https://github.com/docker-library/drupal/pull/299
+					# https://www.drupal.org/project/drupal/releases/10.6.0#platform
+					# https://www.drupal.org/project/drupal/releases/11.3.0#platform
+					if env.version | IN("10.5", "10.6", "11.2") then
+						"8.3"
+					else empty end
 				]
 			),
 			variants: [

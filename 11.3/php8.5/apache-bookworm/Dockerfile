@@ -5,7 +5,7 @@
 #
 
 # https://www.drupal.org/docs/system-requirements/php-requirements
-FROM php:8.3-apache-bookworm
+FROM php:8.5-apache-bookworm
 
 # install the PHP extensions we need
 RUN set -eux; \
